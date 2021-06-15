@@ -5,7 +5,7 @@ from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 from vk_api.utils import get_random_id
 import datetime
 
-vk_session = VkApi(token='1c563f747be6f1d7be97f700d7779427031efdc03d16c4a62419351008dff24b309ca39ff5253215955d8')
+vk_session = VkApi(token='Your Token')
 longpoll = VkBotLongPoll(vk_session, '193242871')
 vk = vk_session.get_api()
 
@@ -35,7 +35,7 @@ def day(sleep_time):
 def per_day():
     vk.messages.send(
         random_id=get_random_id(),
-        peer_id=['2000000003'],
+        peer_id=['Peee_id chat'],
         message=f'Вернусь через {time_ask()}'
     )
 
