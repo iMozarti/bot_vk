@@ -1,5 +1,5 @@
 import time
-from multiprocessing import Process
+from threading import Thread
 from vk_api import VkApi
 from vk_api.bot_longpoll import VkBotLongPoll, VkBotEventType
 from vk_api.utils import get_random_id
@@ -46,25 +46,21 @@ def time_ask():
         try:
             start_date = datetime.date.today()
             end_date = datetime.date(2022, 6, 1)
-            fin_time = str((end_date - start_date).days)
-            if int(fin_time[-1]) == 1:
+            fin_time = int((end_date - start_date).days)
+            if (fin_time % 10 == 1) and (fin_time != 11):
                 return f'{(end_date - start_date).days} день'
-            elif (int(fin_time[-1]) == 2) or (int(fin_time[-1]) == 3):
-                if int(fin_time[-1]) == 4:
-                    return f'{(end_date - start_date).days} дня'
-            elif (int(fin_time[-1]) == 5) or (int(fin_time[-1]) == 6):
-                if (int(fin_time[-1]) == 7) or (int(fin_time[-1]) == 8):
-                    if (int(fin_time[-1]) == 9) or (int(fin_time[-1]) == 0):
-                        return f'{(end_date - start_date).days} дней'
+            elif (2 <= fin_time % 10 <= 4) and (fin_time % 100 < 10 or fin_time % 100 >= 20):
+                return f'{(end_date - start_date).days} дня'
+            else:
+                return f'{(end_date - start_date).days} дней'
         except ValueError as err:
             print(err)
-        else:
-            break
+
 
 
 if __name__ == '__main__':
-    th1 = Process(target=answer, kwargs={'sleep_time': 1})
-    th2 = Process(target=day, kwargs={'sleep_time': 86400})
+    th1 = Thread(target=answer, kwargs={'sleep_time': 1})
+    th2 = Thread(target=day, kwargs={'sleep_time': 86400})
     th1.start()
     th2.start()
 
