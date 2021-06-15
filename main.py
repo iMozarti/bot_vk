@@ -20,7 +20,7 @@ def answer(sleep_time):
                 vk.messages.send(
                     random_id=get_random_id(),
                     peer_id=event.obj['peer_id'],
-                    message=f'{time_ask()} дня братка'
+                    message=f'{time_ask()} братка'
                 )
                 print(event.obj['peer_id'])
 
@@ -36,7 +36,7 @@ def per_day():
     vk.messages.send(
         random_id=get_random_id(),
         peer_id=['2000000003'],
-        message=f'{time_ask()} дня братка'
+        message=f'Вернусь через {time_ask()}'
     )
 
 
@@ -46,12 +46,20 @@ def time_ask():
         try:
             start_date = datetime.date.today()
             end_date = datetime.date(2022, 6, 1)
+            fin_time = str((end_date - start_date).days)
+            if int(fin_time[-1]) == 1:
+                return f'{(end_date - start_date).days} день'
+            elif (int(fin_time[-1]) == 2) or (int(fin_time[-1]) == 3):
+                if int(fin_time[-1]) == 4:
+                    return f'{(end_date - start_date).days} дня'
+            elif (int(fin_time[-1]) == 5) or (int(fin_time[-1]) == 6):
+                if (int(fin_time[-1]) == 7) or (int(fin_time[-1]) == 8):
+                    if (int(fin_time[-1]) == 9) or (int(fin_time[-1]) == 0):
+                        return f'{(end_date - start_date).days} дней'
         except ValueError as err:
             print(err)
         else:
             break
-
-    return (end_date - start_date).days
 
 
 if __name__ == '__main__':
